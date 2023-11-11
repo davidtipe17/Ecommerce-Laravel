@@ -55,7 +55,10 @@
   </nav>
 
   <!-- INICIO PRINCIPAL -->
-  @yield('contenido')
+
+  <main class="container mt-3">
+    @yield('contenido')
+</main>
   <!-- FIN PRINCIPAL-->
 
   <!-- Bootstrap Bundle with Popper -->

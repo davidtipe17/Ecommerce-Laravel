@@ -16,23 +16,23 @@ class CategoriaSeeder extends Seeder
     {
         DB::table('categorias')->insert([
             'id' => '1',
-            'nombre' => 'Diseño Web',
-            'url_seo' => 'diseno-web',
+            'nombre' => 'pants',
+            'url_seo' => 'pants',
         ]);
         DB::table('categorias')->insert([
             'id' => '2',
-            'nombre' => 'Frontend',
-            'url_seo' => 'frontend',
+            'nombre' => 'poles',
+            'url_seo' => 'poles',
         ]);
         DB::table('categorias')->insert([
             'id' => '3',
-            'nombre' => 'Backend',
-            'url_seo' => 'backend',
+            'nombre' => 'sneakers',
+            'url_seo' => 'sneakers',
         ]);
         DB::table('categorias')->insert([
             'id' => '4',
-            'nombre' => 'Base de datos',
-            'url_seo' => 'base-de-datos',
+            'nombre' => 'underwear',
+            'url_seo' => 'underwear',
         ]);
     }
 }

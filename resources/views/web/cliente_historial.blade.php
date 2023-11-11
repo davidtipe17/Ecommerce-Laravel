@@ -34,9 +34,11 @@
         </div>
         <!-- Lista Pedidos -->
         <div class="col-12 col-md-9 col-lg-8 offset-lg-1">
+
           <div class="text-end">
-            <a href="/cliente/reporte/pedidos" class="btn btn-success">Descargar Excel</a>
+            <a href="{{route('historial.exportar.excel')}}" class="btn btn-success">Descargar Excel</a>
           </div>
+
           <!-- Inicio Pedido -->
           @foreach($pedidos as $pedido)
           <div class="card mt-3 mb-5 border">

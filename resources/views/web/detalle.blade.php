@@ -36,7 +36,9 @@
             </div>
             <p class="h4">S/ {{$producto->precio}}</p>
             <p class="text-small mb-4">{{$producto->descripcion}}</p>
+            <p class="text-small mb-4">{{$producto->stock}}</p>
             <form method="post" action="/carrito/agregar">
+          
               @csrf
               <input type="hidden" name="id" value="{{$producto->id}}" />
               <div class="d-flex align-items-center mb-4">
@@ -44,7 +46,7 @@
                   <div class="quantity py-0">
                     <button type="button" class="dec-btn p-0" onclick="decrease(this)"><i class="fas fa-caret-left"></i></button>
                     <input class="form-control border-0 shadow-0 p-0 quantity-result" type="text" name="cantidad" value="1">
-                    <button type="button" class="inc-btn p-0" onclick="increase(this)"><i class="fas fa-caret-right"></i></button>
+                    <button type="button" class="inc-btn p-0" onclick="increase(this , {{$producto->stock}})"><i class="fas fa-caret-right"></i></button>
                   </div>
                 </div>
                 <button type="submit" class="btn btn-primary btn-sm py-2 border-bottom-0 px-5 me-3"> <i class="fas fa-shopping-bag py-1 me-2"></i>Añadir al carrito</button>
@@ -55,5 +57,4 @@
         </div>
       </div>
 </section>
-
 @endsection

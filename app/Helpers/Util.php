@@ -39,4 +39,28 @@ class Util {
         $estados = ['P'=>'Esperando Entrega','E'=>'Pedido Entregado','N'=>'Pedido Anulado'];
         return $estados[$valor];
     }
+
+    public static function EstadoProducto($valor){
+    	$texto = '';
+    	if($valor=='A'){
+        	$texto = 'Activo';
+    	}else if($valor=='I'){
+        	$texto = 'Inactivo';
+    	}
+	return $texto;
+    }
+
+    public static function bagde($valor){
+    	$estilo = '';
+    	if($valor=='A'){
+        	$estilo = 'success';
+    	}else if($valor=='I'){
+        	$estilo = 'secondary';
+    	}else if($valor=='E'){
+        	$estilo = 'danger';
+    	}else if($valor=='N'){
+        	$estilo = 'dark';
+    	}
+    	return $estilo;
+	}
 }

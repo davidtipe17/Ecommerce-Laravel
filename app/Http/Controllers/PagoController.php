@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Venta;
 use App\Models\VentaProducto;
+use App\Models\Producto;
 use MercadoPago;
 
 class PagoController extends Controller
@@ -55,8 +56,24 @@ class PagoController extends Controller
             $datosVenta = $request->session()->get('venta');
             $carrito = $request->session()->get('carrito');
             $totalVenta = 0;
-            foreach($carrito as $producto){
+            foreach ($carrito as $idprod => $producto) {
+                
                 $totalVenta += $producto['total'];
+
+                $productoDB = Producto::find($idprod);
+
+                
+                echo "Valor de idprod: " . $idprod . PHP_EOL;
+                if ($productoDB) {
+                    if ($productoDB->stock >= $producto['cantidad']) {
+                        $productoDB->stock -= $producto['cantidad'];
+                        $productoDB->save();
+                    } else {
+                        return back()->with('error', 'Tu mensaje de error aquí');
+                    }
+                } else {
+                    return back()->with('error', 'Tu mensaje de error aquí');
+                }
             }
             // Creamos la cabecera de la venta
             $venta = new Venta;
@@ -80,6 +97,8 @@ class PagoController extends Controller
                     $detalle->cantidad = $producto['cantidad'];
                     $detalle->total = $producto['total'];
                     $detalle->save();
+
+                    
                 }
                 $respuesta = [
                     'id' => $idventa,
@@ -91,8 +110,12 @@ class PagoController extends Controller
     }
 
     public function completado(Request $request){
+
+
+
         $venta = false;
         // Verifico si me envia la variable status desde MercadoPago
+
         if(isset($_GET['status'])){
             $status = $_GET['status'];
             $idventa = $_GET['external_reference'];
@@ -117,6 +140,7 @@ class PagoController extends Controller
                 'mensaje' => 'Tu compra no se ha podido realizar'
             ];
         }
+
         // Eliminamos la venta y el carrito de la sesión
         $request->session()->forget('venta');
         $request->session()->forget('carrito');

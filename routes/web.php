@@ -10,7 +10,6 @@ use App\Http\Controllers\PagoController;
 use App\Http\Controllers\Admin\LoginController;
 use App\Http\Controllers\Admin\DashController;
 use App\Http\Controllers\Admin\CategoriaController;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -21,7 +20,6 @@ use App\Http\Controllers\Admin\CategoriaController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 Route::get('/', [InicioController::class, 'index'])->name('inicio');
 Route::get('/catalogo/{url}', [CatalogoController::class, 'index'])->name('catalogo');
 Route::get('/producto/{url}', [CatalogoController::class, 'detalle'])->name('producto');
@@ -38,12 +36,11 @@ Route::group(['middleware'=>'auth'], function(){
     Route::post('/pago/resumen', [PagoController::class, 'resumen'])->name('pago.resumen');
     Route::get('/pago/completado', [PagoController::class, 'completado'])->name('pago.completado');
 });
-
 Route::group(['prefix'=>'/cliente','middleware'=>'auth'], function(){
     Route::get('/historial', [ClienteController::class, 'index'])->name('cliente.historial');
     Route::get('/pedido/{id}', [ClienteController::class, 'pedido'])->name('cliente.pedido');
-});
-
+});//descargar excel
+Route::get('/libros/exportar/excel', [ClienteController::class, 'exportarExcel'])->name('historial.exportar.excel');
 // Rutas de acceso para el BackOffice
 Route::prefix('/admin')->group(function(){
     Route::get('', [LoginController::class, 'index'])->name('admin.index'); //-> /admin
@@ -51,7 +48,10 @@ Route::prefix('/admin')->group(function(){
     Route::get('/salir', [LoginController::class, 'salir'])->name('admin.salir'); //-> /admin/salir
     // Aplicamos la regla de autenticaión para el guard "admin"
     Route::middleware(['auth:admin'])->group(function(){
-        Route::get('/dash', [DashController::class, 'index'])->name('admin.dash'); //-> /admin/ingresar
-        Route::get('/categorias', [CategoriaController::class, 'index'])->name('admin.categoria.index'); //-> /admin/categorias
+        Route::get('/dash', [DashController::class, 'index'])->name('admin.producto'); //-> /admin/ingresar
+        Route::get('/productos/nuevo', [DashController::class, 'nuevo'])->name('producto.nuevo'); //-> /admin/nuevo
+        Route::post('/productos/guardar', [DashController::class, 'guardar'])->name('producto.guardar');
+        Route::post('clients/upload-masive', [DashController::class, 'saveMasive'])->name('producto.guardar.masive');
+
     });
 });
